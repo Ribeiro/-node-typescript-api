@@ -1,0 +1,16 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "TypeScript Node.js API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Geovanny Ribeiro",
+  "license": "MIT"
+}
