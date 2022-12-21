@@ -4,8 +4,8 @@
  */
 // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts/51114250#51114250
 declare global {
-    //eslint-disable-next-line no-var
-    var testRequest: import('supertest').SuperTest<import('supertest').Test>;
+  //eslint-disable-next-line no-var
+  var testRequest: import('supertest').SuperTest<import('supertest').Test>;
 }
 
-export { };
+export {};
