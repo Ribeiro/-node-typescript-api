@@ -85,20 +85,7 @@ export class StormGlass {
             return this.normalizeResponse(response.data);
 
         } catch (err) {
-            /**
-            * This is handling the Axios errors specifically
-            */
-            const axiosError = err as AxiosError;
-            if (
-                axiosError instanceof Error &&
-                axiosError.response &&
-                axiosError.response.status
-            ) {
-                throw new StormGlassResponseError(
-                    `Error: ${JSON.stringify(axiosError.response.data)} Code: ${axiosError.response.status
-                    }`
-                );
-            }
+            this.handleAxios(err);
             // The type is temporary given we will rework it in the upcoming chapters
             throw new ClientRequestError((err as { message: any }).message);
         }
@@ -128,6 +115,21 @@ export class StormGlass {
             point.windDirection?.[this.stormGlassAPISource] &&
             point.windSpeed?.[this.stormGlassAPISource]
         );
+    }
+
+    private handleAxios(error: any): void {
+        const axiosError = error as AxiosError;
+        if (
+            axiosError instanceof Error &&
+            axiosError.response &&
+            axiosError.response.status
+        ) {
+            throw new StormGlassResponseError(
+                `Error: ${JSON.stringify(axiosError.response.data)} Code: ${axiosError.response.status
+                }`
+            );
+        }
+
     }
 
 }
