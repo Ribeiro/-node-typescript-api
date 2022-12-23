@@ -8,11 +8,10 @@ jest.mock('axios');
 
 describe('StormGlass client', () => {
     const mockedAxios = axios as jest.Mocked<typeof axios>;
+    const lat = -33.792726;
+    const lng = 151.289824;
 
     it('should return normalized forecast from StormGlass service', async () => {
-        const lat = -33.792726;
-        const lng = 151.289824;
-
         mockedAxios.get.mockResolvedValue({ data: stormGlassWeather3HoursFixture });
 
         const stormGlass = new StormGlass(axios);
@@ -21,8 +20,6 @@ describe('StormGlass client', () => {
     });
 
     it('should exclude incomplete data points', async () => {
-        const lat = -33.792726;
-        const lng = 151.289824;
         const incompleteResponse = {
             hours: [
                 {
@@ -33,6 +30,7 @@ describe('StormGlass client', () => {
                 },
             ],
         };
+
         mockedAxios.get.mockResolvedValue({ data: incompleteResponse });
 
         const stormGlass = new StormGlass(mockedAxios);
@@ -42,9 +40,6 @@ describe('StormGlass client', () => {
     });
 
     it('should get a generic error from StormGlass service when the request fail before reaching the service', async () => {
-        const lat = -33.792726;
-        const lng = 151.289824;
-
         mockedAxios.get.mockRejectedValue({ message: 'Network Error' });
 
         const stormGlass = new StormGlass(mockedAxios);
@@ -55,9 +50,6 @@ describe('StormGlass client', () => {
     });
 
     it('should get an StormGlassResponseError when the StormGlass service responds with error', async () => {
-        const lat = -33.792726;
-        const lng = 151.289824;
-
         mockedAxios.get.mockRejectedValue(
             new FakeAxiosError({
                 status: 429,
