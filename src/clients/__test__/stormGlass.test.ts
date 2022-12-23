@@ -2,6 +2,7 @@ import { StormGlass } from '@src/clients/stormGlass';
 import axios from 'axios';
 import stormGlassWeather3HoursFixture from '@test/fixtures/stormglass_weather_3_hours.json';
 import stormGlassNormalized3HoursFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
+import { FakeAxiosError } from '@src/util/errors/fake-axios-error';
 
 jest.mock('axios');
 
@@ -56,12 +57,6 @@ describe('StormGlass client', () => {
     it('should get an StormGlassResponseError when the StormGlass service responds with error', async () => {
         const lat = -33.792726;
         const lng = 151.289824;
-
-        class FakeAxiosError extends Error {
-            constructor(public response: object) {
-                super();
-            }
-        }
 
         mockedAxios.get.mockRejectedValue(
             new FakeAxiosError({
